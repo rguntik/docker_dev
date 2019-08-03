@@ -2,7 +2,6 @@ version: '3'
 services:
     rg_nginx:
         image: nginx:latest
-        container_name: rg_nginx
         ports:
             - 8012:80
         volumes:
@@ -16,7 +15,6 @@ services:
     rg_php:
         build:
             context: ./images/php
-        container_name: rg_php
         ports:
             - 9002:9000
         volumes:
@@ -25,7 +23,6 @@ services:
             - static-network
     rg_mysql:
         image: mysql:5.7
-        container_name: rg_mysql
         ports:
             - 3311:3306
         depends_on:

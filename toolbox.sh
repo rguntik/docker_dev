@@ -10,7 +10,7 @@ function docker_up() {
     exit -1
   fi
 
-  docker-compose -p $VOLUME_DIR -f docker-compose.yml up $@
+  docker-compose -f docker-compose.yml up $@
 }
 
 function docker_shutdown() {
