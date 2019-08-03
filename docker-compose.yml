@@ -1,0 +1,47 @@
+version: '3'
+services:
+    rg_nginx:
+        image: nginx:latest
+        container_name: rg_nginx
+        ports:
+            - 8012:80
+        volumes:
+            - ./hosts:/etc/nginx/conf.d
+            - ${VOLUME_DIR}:/var/www
+        depends_on:
+            - rg_php
+        networks:
+            static-network:
+                ipv4_address: 172.221.0.7
+    rg_php:
+        build:
+            context: ./images/php
+        container_name: rg_php
+        ports:
+            - 9002:9000
+        volumes:
+            - ${VOLUME_DIR}:/var/www
+        networks:
+            - static-network
+    rg_mysql:
+        image: mysql:5.7
+        container_name: rg_mysql
+        ports:
+            - 3311:3306
+        depends_on:
+            - rg_php
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        volumes:
+          - ./data/mysql:/var/lib/mysql
+        networks:
+            static-network:
+                ipv4_address: 172.221.0.6
+networks:
+    static-network:
+        ipam:
+            config:
+                - subnet: 172.221.0.0/16
