@@ -19,7 +19,7 @@ function docker_shutdown() {
     exit -1
   fi
 
-  docker-compose -p $VOLUME_DIR -f docker-compose.yml down $@
+  docker-compose -f docker-compose.yml down $@
 }
 
 function ssh() {
