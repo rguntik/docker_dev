@@ -17,6 +17,7 @@ services:
             context: ./images/php
         ports:
             - 9002:9000
+        user: ${CURRENT_UID}
         volumes:
             - ${VOLUME_DIR}:/var/www
         networks:

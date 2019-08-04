@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 cd $(dirname $0)
+export CURRENT_UID=$(id -u):$(id -g)
 
 PHP_CONTAINER_ID=$(docker ps --format '{{.ID}}\t{{.Names}}' | grep rg_php | cut -f1)
 
