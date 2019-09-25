@@ -38,7 +38,7 @@ function ssh() {
   fi
 }
 
-function npm_install() {
+function npm() {
     CURDIR=`pwd`
     echo $CURDIR
     docker build -t tmp_ui_npm:latest - << EOF
@@ -50,7 +50,7 @@ RUN mkdir /.npm
 RUN chown -R $CURRENT_UID /.npm
 USER $CURRENT_UID
 WORKDIR /www/src
-CMD npm install
+CMD npm $@
 EOF
     docker run -v "$CURDIR:/www" -it tmp_ui_npm:latest
     docker image rm -f tmp_ui_npm:latest
@@ -65,7 +65,7 @@ commands:
 * ssh
 * up
 * down
-* npm_instsll
+* npm
 "
 }
 
@@ -84,8 +84,9 @@ ssh)
   ssh $2
   exit
   ;;
-npm_install)
-  npm_install
+npm)
+  shift
+  npm $@
   exit
   ;;
 esac
