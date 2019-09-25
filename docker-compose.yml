@@ -36,8 +36,7 @@ services:
         volumes:
           - ./data/mysql:/var/lib/mysql
         networks:
-            static-network:
-                ipv4_address: 172.223.0.6
+            - static-network
 networks:
     static-network:
         ipam:
