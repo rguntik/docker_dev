@@ -44,8 +44,7 @@ FROM alpine
 
 RUN apk update
 RUN apk add nodejs-npm
-RUN mkdir /.npm /.config
-RUN chown -R $CURRENT_UID /.npm /.config
+RUN mkdir /.npm /.config && chown -R $CURRENT_UID /.npm /.config
 USER $CURRENT_UID
 WORKDIR /www
 CMD npm $@
