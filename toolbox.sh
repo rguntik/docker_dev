@@ -39,8 +39,6 @@ function ssh() {
 }
 
 function npm() {
-    CURDIR=`pwd`
-    echo $CURDIR
     docker build -t tmp_ui_npm:latest - << EOF
 FROM alpine
 
@@ -49,10 +47,10 @@ RUN apk add nodejs-npm
 RUN mkdir /.npm /.config
 RUN chown -R $CURRENT_UID /.npm /.config
 USER $CURRENT_UID
-WORKDIR /www/src
+WORKDIR /www
 CMD npm $@
 EOF
-    docker run -v "$CURDIR:/www" -it tmp_ui_npm:latest
+    docker run -v "$VOLUME_DIR:/www" -it tmp_ui_npm:latest
     docker image rm -f tmp_ui_npm:latest
 }
 
